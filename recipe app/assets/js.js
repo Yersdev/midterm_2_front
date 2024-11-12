@@ -1,14 +1,13 @@
 const apiKey = 'fa4e995c758c42878af9e8baa0ce3543';
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-// Функция для загрузки популярных рецептов
 async function loadPopularRecipes() {
     try {
         const response = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=6`);
         const data = await response.json();
         const popularRecipesList = document.getElementById("popular-recipes-list");
 
-        popularRecipesList.innerHTML = ""; // Очистка списка
+        popularRecipesList.innerHTML = ""; 
 
         data.recipes.forEach(recipe => {
             const recipeItem = document.createElement("div");
@@ -58,8 +57,6 @@ async function loadPopularRecipes() {
         console.error("Error loading popular recipes:", error);
     }
 }
-
-// Функция для отображения деталей рецепта в модальном окне
 async function showRecipeDetails(recipeId, recipe) {
     const recipeDetailsDiv = document.getElementById("recipe-details");
     const recipeContentDiv = document.getElementById("recipe-content");
@@ -68,7 +65,6 @@ async function showRecipeDetails(recipeId, recipe) {
         const response = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`);
         const recipeData = await response.json();
 
-        // Составление контента для модального окна
         recipeContentDiv.innerHTML = `
     <h2 class="recipe-detials-title">${recipeData.title}</h2>
     <div class="recipe-details">
@@ -89,14 +85,12 @@ async function showRecipeDetails(recipeId, recipe) {
 `;
 
 
-        recipeDetailsDiv.style.display = "block"; // Показываем модальное окно
-    } catch (error) {
+        recipeDetailsDiv.style.display = "block";} catch (error) {
         console.log("Error loading recipe details:", error);
         recipeContentDiv.innerHTML = "Error loading recipe details. Please try again later.";
     }
 }
 
-// Функция для добавления рецепта в избранное
 function addToFavorites(recipe) {
     if (recipe && recipe.id) {
         if (!favorites.some(fav => fav.id === recipe.id)) {
@@ -111,11 +105,10 @@ function addToFavorites(recipe) {
     }
 }
 
-// Функция для показа избранных рецептов
+
 function showFavorites() {
     const favoritesList = document.getElementById("favorites-list");
-    favoritesList.innerHTML = ""; // Очистка списка
-
+    favoritesList.innerHTML = "";
     if (favorites.length === 0) {
         favoritesList.innerHTML = "No favorite recipes found.";
     } else {
@@ -134,8 +127,7 @@ function showFavorites() {
             detailsLink.href = "#";
             detailsLink.textContent = "Details...";
             detailsLink.onclick = function () {
-                showRecipeDetails(recipe.id, recipe); // Передаем объект recipe
-            };
+                showRecipeDetails(recipe.id, recipe);};
 
             recipeItem.appendChild(recipeImg);
             recipeItem.appendChild(recipeTitle);
@@ -145,26 +137,30 @@ function showFavorites() {
     }
 }
 
-// Закрытие модального окна
 function closeRecipeDetails() {
     document.getElementById("recipe-details").style.display = "none";
 }
 
-// Функция поиска рецептов
 async function searchRecipes() {
+    document.getElementById
     const searchQuery = document.getElementById("search-query").value;
+    const popularRecipesList = document.getElementById("popular-recipes-list");
+    const searchResults = document.getElementById("search-results");
 
     if (!searchQuery) {
         alert('Please enter a search term!');
+        popularRecipesList.style.display = "block"; // Показываем главные рецепты
+        searchResults.innerHTML = ""; // Очищаем результаты поиска
         return;
+    } else {
+        popularRecipesList.style.display = "none"; // Скрываем главные рецепты при поиске
     }
 
     try {
         const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${searchQuery}`);
         const data = await response.json();
-        const searchResults = document.getElementById("search-results");
 
-        searchResults.innerHTML = ""; // Очистка списка результатов поиска
+        searchResults.innerHTML = ""; // Очищаем результаты предыдущего поиска
 
         if (data.results.length === 0) {
             searchResults.innerHTML = "No recipes found.";
@@ -184,7 +180,7 @@ async function searchRecipes() {
                 detailsLink.href = "#";
                 detailsLink.textContent = "Details...";
                 detailsLink.onclick = function () {
-                    showRecipeDetails(recipe.id, recipe); // Передаем объект recipe
+                    showRecipeDetails(recipe.id, recipe);
                 };
 
                 recipeItem.appendChild(recipeImg);
@@ -197,18 +193,21 @@ async function searchRecipes() {
         console.error("Error searching recipes:", error);
     }
 }
-// Function to open the favorites modal
+
+
+
+function closeRecipeDetails() {
+    document.getElementById("recipe-details").style.display = "none";
+}
 function openFavoritesModal() {
-    showFavorites(); // Populate the favorites list
+    showFavorites();
     document.getElementById("favorites-modal").style.display = "block";
 }
 
-// Function to close the favorites modal
 function closeFavoritesModal() {
     document.getElementById("favorites-modal").style.display = "none";
 }
 
-// Update showFavorites to display recipes in the modal
 function showFavorites() {
     const favoritesList = document.getElementById("favorites-list");
     favoritesList.innerHTML = ""; // Clear the favorites list
@@ -233,8 +232,7 @@ function showFavorites() {
             detailsLink.href = "#";
             detailsLink.textContent = "Details...";
             detailsLink.onclick = function () {
-                showRecipeDetails(recipe.id, recipe); // Display recipe details
-            };
+                showRecipeDetails(recipe.id, recipe); };
 
             recipeItem.appendChild(recipeImg);
             recipeItem.appendChild(recipeTitle);
@@ -244,10 +242,8 @@ function showFavorites() {
     }
 }
 
-// Close recipe details modal
 function closeRecipeDetails() {
     document.getElementById("recipe-details").style.display = "none";
 }
 
-// Загрузка популярных рецептов при запуске страницы
 window.onload = loadPopularRecipes;

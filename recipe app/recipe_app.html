@@ -14,13 +14,13 @@
         <nav>
             <input type="text" id="search-query" placeholder="Search for recipes">
             <button onclick="searchRecipes()">Search</button>
-            <button onclick="openFavoritesModal()">Favorites</button> <!-- Button to open modal -->
+            <button onclick="openFavoritesModal()">Favorites</button>
         </nav>
     </header>
 
     <div id="main-content">
         <div id="recipe-details" style="display: none;">
-            <div id="recipe-content"></div> <!-- Ensure this element exists -->
+            <div id="recipe-content"></div>
             <button class="close-button" onclick="closeRecipeDetails()">Close</button>
         </div>
         
@@ -28,12 +28,11 @@
         <div id="search-results" class="recipes-grid"></div>
     </div>
 
-    <!-- Favorites Modal -->
     <div id="favorites-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close" onclick="closeFavoritesModal()">&times;</span>
             <h2>Favorites</h2>
-            <div id="favorites-list"></div> <!-- Placeholder for favorite recipes -->
+            <div id="favorites-list"></div>
         </div>
     </div>
 

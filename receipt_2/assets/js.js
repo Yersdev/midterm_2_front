@@ -1,4 +1,4 @@
-const apiKey = 'fa4e995c758c42878af9e8baa0ce3543';
+const apiKey = 'eaf328c3170448289364aea5f58971d8';
 const baseUrl = 'https://api.spoonacular.com/recipes';
 let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
 let ratings = JSON.parse(localStorage.getItem('ratings')) || {};
@@ -8,7 +8,6 @@ const mainRecipesContainer = document.getElementById('main-recipes');
 const searchResultsContainer = document.getElementById('search-results');
 const autocompleteContainer = document.getElementById('autocomplete-dropdown');
 
-// Fetch Recipe of the Day
 async function fetchRecipeOfTheDay() {
     try {
         const response = await fetch(`${baseUrl}/random?apiKey=${apiKey}&number=1`);
@@ -27,20 +26,18 @@ async function fetchRecipeOfTheDay() {
     }
 }
 
-// Display Recipe of the Day
 function displayRecipeOfTheDay(recipe) {
     recipeOfTheDayContainer.innerHTML = `
         <div class="recipe-container-day">
             <h2 class = "recipe__title-day">Recipe of the Day</h2>
             <img src="${recipe.image}" alt="${recipe.title}" class="recipe-image">
             <h3 class="recipe-container-title">${recipe.title}</h3>
-            <p>${recipe.summary ? recipe.summary.slice(0, 100) + '...' : 'No description available'}</p>
+            
             <button class="recipe-container-detail" onclick="showRecipeDetails(${recipe.id})">View Details</button>
         </div>
     `;
 }
 
-// Fetch Popular Recipes
 async function fetchPopularRecipes() {
     try {
         const response = await fetch(`${baseUrl}/complexSearch?apiKey=${apiKey}&sort=popularity&number=5`);
@@ -55,30 +52,45 @@ async function fetchPopularRecipes() {
     }
 }
 
-// Display Popular Recipes
 function displayPopularRecipes(recipes) {
     mainRecipesContainer.innerHTML = recipes.map(recipe => `
         <div class="recipe-container">
             <img class="popular-recipe-img" src="${recipe.image}" alt="${recipe.title}" class="recipe-image">
             <h4 class="popular-recipe-subtitle">${recipe.title}</h4>
-            <p>${recipe.summary ? recipe.summary.slice(0, 100) + '...' : 'No description available'}</p>
+            
             <button class="recipe-container-detail" onclick="showRecipeDetails(${recipe.id})">View Details</button>
+            
         </div>
     `).join('');
 }
+function initializeFavorites() {
+    Object.keys(favorites).forEach(recipeId => {
+        updateFavoriteButton(recipeId);
+    });
+}
 
-// Fetch Recipe Details
+initializeFavorites();
+
+
 async function showRecipeDetails(recipeId) {
+    if (!recipeId) {
+        console.error('Recipe ID is undefined');
+        return;
+    }
+
     try {
         const response = await fetch(`${baseUrl}/${recipeId}/information?apiKey=${apiKey}`);
-        const recipe = await response.json();
-        displayRecipeDetails(recipe);
+        if (response.ok) {
+            const recipe = await response.json();
+            displayRecipeDetails(recipe);
+        } else {
+            console.error('Error fetching recipe details:', response.status);
+        }
     } catch (error) {
         console.error('Error fetching recipe details:', error);
     }
 }
 
-// Display Recipe Details
 function displayRecipeDetails(recipe) {
     document.getElementById('modal-title').innerText = recipe.title;
     document.getElementById('modal-image').src = recipe.image;
@@ -97,18 +109,15 @@ document.getElementById('modal-instructions').innerHTML = `
     document.getElementById('recipe-modal').style.display = 'block';
 }
 
-// Close the Recipe Modal
 function closeRecipeModal() {
     document.getElementById('recipe-modal').style.display = 'none';
 }
 
-// Save Rating
 function saveRating(recipeId, rating) {
     ratings[recipeId] = rating;
     localStorage.setItem('ratings', JSON.stringify(ratings));
 }
 
-// Submit Rating
 function submitRating() {
     const ratingInput = document.getElementById('rating-input');
     const rating = parseInt(ratingInput.value, 10);
@@ -124,41 +133,101 @@ function submitRating() {
     }
 }
 
-// Toggle Favorite
-function toggleFavorite(recipeId) {
+function toggleFavorite(recipeId, recipeName) {
     if (favorites[recipeId]) {
         delete favorites[recipeId];
+        alert("We successfully removed the receipt");
+        
     } else {
-        favorites[recipeId] = true;
+        favorites[recipeId] = { name: recipeName, id: recipeId };
+        alert("We successfully added the receipt");
     }
     localStorage.setItem('favorites', JSON.stringify(favorites));
+
+    updateFavoritesButton(recipeId);
 }
 
-// Open Favorites Modal
+function updateFavoritesButton(recipeId) {
+    const button = document.querySelector(`[data-recipe-id="${recipeId}"]`);
+    if (button) {
+        button.innerText = favorites[recipeId] ? 'Remove from Favorites' : 'Add to Favorites';
+    }
+}
+
+
+function updateFavoritesButton(recipeId) {
+    const button = document.querySelector(`[data-recipe-id="${recipeId}"]`);
+    if (button) {
+        button.innerText = favorites[recipeId] ? 'Remove from Favorites' : 'Add to Favorites';
+    }
+}
+
+
+function updateFavoriteButton(recipeId) {
+    const button = document.querySelector(`[data-recipe-id="${recipeId}"]`);
+    if (button) {
+        if (favorites[recipeId]) {
+            button.classList.add('favorited');
+            button.innerText = 'Remove from Favorites';
+        } else {
+            button.classList.remove('favorited');
+            button.innerText = 'Add to Favorites';
+        }
+    }
+}
+
 function openFavoritesModal() {
     const favoritesList = document.getElementById('favorites-list');
-    favoritesList.innerHTML = Object.keys(favorites).length
-        ? Object.keys(favorites).map(id => `
-            <div class="recipe-container">
-                <h4>${id}</h4>
-                <button onclick="showRecipeDetails(${id})">View Details</button>
-                <button onclick="removeFavorite(${id})">Remove</button>
-            </div>
-        `).join('')
-        : '<p>No favorites added yet.</p>';
+    favoritesList.innerHTML = '';
+
+    if (Object.keys(favorites).length > 0) {
+        Object.keys(favorites).forEach(id => {
+            fetch(`${baseUrl}/${id}/information?apiKey=${apiKey}`)
+                .then(response => response.json())
+                .then(recipe => {
+                    const favoriteItem = document.createElement('div');
+                    favoriteItem.classList.add('recipe-container');
+                    favoriteItem.innerHTML = `
+                    <div class="favorite-container">
+                        <button onclick="viewFavoriteDetails(${id})" class="view-details-btn">View Details</button>
+                        <h4>${recipe.title}</h4>
+                        <img src="${recipe.image}" alt="${recipe.title}" class="recipe-image">
+                        <button onclick="removeFavorite(${id})">Remove</button>
+                        </div>
+                    `;
+                    favoritesList.appendChild(favoriteItem);
+                });
+        });
+    } else {
+        favoritesList.innerHTML = '<p>No favorites added yet.</p>';
+    }
     document.getElementById('favorites-modal').style.display = 'block';
 }
 
-// Close Favorites Modal
+function viewFavoriteDetails(recipeId) {
+    showRecipeDetails(recipeId);
+    closeFavoritesModal(); 
+}
+
 function closeFavoritesModal() {
     document.getElementById('favorites-modal').style.display = 'none';
 }
 
-// Remove Favorite
+
 function removeFavorite(recipeId) {
     delete favorites[recipeId];
     localStorage.setItem('favorites', JSON.stringify(favorites));
-    openFavoritesModal(); // Refresh favorites list
+    openFavoritesModal();}
+
+function closeFavoritesModal() {
+    document.getElementById('favorites-modal').style.display = 'none';
+}
+
+
+function removeFavorite(recipeId) {
+    delete favorites[recipeId];
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    openFavoritesModal();
 }
 
 async function searchRecipes(event) {
@@ -169,30 +238,75 @@ async function searchRecipes(event) {
         return;
     }
 
+    recipeOfTheDayContainer.style.display = 'none';
+    mainRecipesContainer.style.display = 'none';
+    searchResultsContainer.style.display = 'grid';
+
     try {
-        console.log("Выполняется поиск:", query);
         const response = await fetch(`${baseUrl}/complexSearch?apiKey=${apiKey}&query=${query}&number=10`);
         
         if (!response.ok) {
-            throw new Error(`Ошибка при выполнении запроса: ${response.status}`);
+            throw new Error(`Error: ${response.status}`);
         }
 
         const data = await response.json();
-        console.log("Результаты поиска:", data);
-
         if (data && data.results) {
             displaySearchResults(data.results);
         } else {
-            mainRecipesContainer.innerHTML = '<p>Не найдено рецептов.</p>';
+            searchResultsContainer.innerHTML = '<p>No recipes found.</p>';
         }
     } catch (error) {
-        console.error('Ошибка при выполнении поиска:', error);
-        mainRecipesContainer.innerHTML = '<p>Ошибка при выполнении поиска. Повторите попытку позже.</p>';
+        console.error('Error during search:', error);
+        searchResultsContainer.innerHTML = '<p>Error occurred. Please try again later.</p>';
     }
 }
 
+function resetToDefault() {
+    recipeOfTheDayContainer.style.display = 'block';
+    mainRecipesContainer.style.display = 'grid';
+    searchResultsContainer.style.display = 'none';
+
+    fetchRecipeOfTheDay();
+}
+
+async function fetchRecipeOfTheDay() {
+    try {
+        const response = await fetch(`${baseUrl}/random?apiKey=${apiKey}&number=1`);
+        
+        if (response.ok) {
+            const data = await response.json();
+            if (data.recipes && data.recipes.length > 0) {
+                displayRecipeOfTheDay(data.recipes[0]);
+            } else {
+                console.error('No data for recipe of the day');
+            }
+        } else {
+            const errorText = await response.text(); 
+            console.error('Error fetching recipe of the day:', response.status, errorText);
+        }
+    } catch (error) {
+        console.error('Error fetching recipe of the day:', error);
+    }
+}
+
+
+function displayRecipeOfTheDay(recipe) {
+    recipeOfTheDayContainer.innerHTML = `
+        <div class="recipe-container-day">
+            <h2 class="recipe__title-day">Recipe of the Day</h2>
+            <img src="${recipe.image}" alt="${recipe.title}" class="recipe-image">
+            <h3 class="recipe-container-title">${recipe.title}</h3>
+            
+            <button class="recipe-container-detail" onclick="showRecipeDetails(${recipe.id})">View Details</button>
+        </div>
+    `;
+}
+
+
+
+
 function displaySearchResults(recipes) {
-    mainRecipesContainer.innerHTML = ''; // Очистка контейнера перед добавлением новых рецептов
+    mainRecipesContainer.innerHTML = ''; 
 
     if (recipes.length > 0) {
         mainRecipesContainer.style.display = 'grid';
@@ -212,7 +326,6 @@ function displaySearchResults(recipes) {
 }
 
 
-// Display Autocomplete Suggestions
 function displayAutocompleteSuggestions(suggestions) {
     autocompleteContainer.innerHTML = suggestions.map(suggestion => `
         <div class="suggestion-item" onclick="searchRecipes({target: {value: '${suggestion.title}'}})">
@@ -222,7 +335,6 @@ function displayAutocompleteSuggestions(suggestions) {
     autocompleteContainer.style.display = 'block';
 }
 
-// Display Search Results
 function displaySearchResults(recipes) {
     searchResultsContainer.innerHTML = '';
     
@@ -243,7 +355,6 @@ function displaySearchResults(recipes) {
     }
 }
 
-// Reset to Default State
 function resetToDefault() {
     mainRecipesContainer.style.display = 'grid';
     searchResultsContainer.style.display = 'none';

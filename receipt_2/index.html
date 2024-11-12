@@ -17,7 +17,6 @@
                 <button onclick="searchRecipes()">Search</button>
                 <button onclick="openFavoritesModal()">Favorite Food</button>    
             </div>
-            <div id="autocomplete-dropdown" style="display:none;"></div> <!-- Autocomplete dropdown -->
         </nav>
         
     </header>
@@ -28,7 +27,6 @@
         <div id="search-results" class="recipes-grid" style="display: none;"></div>
     </div>
 
-    <!-- Recipe Details Modal -->
     <div id="recipe-modal" class="modal">
         <div class="modal-content">
             <span class="close-button" onclick="closeRecipeModal()">&times;</span>
@@ -51,14 +49,13 @@
         </div>
     </div>
 
-    <!-- Favorites Modal -->
-    <div id="favorites-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeFavoritesModal()">&times;</span>
-            <h2>Favorite Recipes</h2>
-            <div id="favorites-list"></div>
-        </div>
+<div id="favorites-modal" class="modal">
+    <div class="modal-content">
+        <h2>Your Favorite Recipes</h2>
+        <div id="favorites-list"></div>
+        <button onclick="closeFavoritesModal()">Close</button>
     </div>
+</div>
 
     <script src="assets/js.js"></script>
 </body>
