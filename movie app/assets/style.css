@@ -1,0 +1,520 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Exo 2", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+body{
+}
+
+.movie_app__nav{
+    background-color: #5e40a9;
+    padding: 20px;
+    border-radius:0 0 10px 10px;
+}
+.nav__icon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav__icon-els{
+    display: flex;
+    gap: 8px;
+}
+.icon-img{
+
+}
+.nav__wishlist-button{
+    border: none;
+    text-align: center;
+    background-color:#5e40a9;
+    text-decoration: underline 1px;
+    color: white;
+    font-weight: 400;
+}
+.nav__wishlist-button:hover{
+    color: #aaa;
+}
+.wishlist-item{width: 80%;
+    margin: 50px;
+    display: flex;
+
+    justify-content: space-around;
+}
+.wish-item__btns{
+    display: flex;
+}
+
+.wishlist_empty{
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.wishlist-modal__title{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 20px;
+}
+.wishlist-container{
+    display: flex;
+}
+
+.wish-list-title{
+    font-size: 14px;
+    font-weight: 400;
+
+}
+#add-to-wishlist{
+    margin: 20px 50px 10px 50px;
+    border: none;
+    font-size: 16px;
+}
+#add-to-wishlist:hover{
+    color: #888;
+    text-decoration: underline 1px;
+}
+.nav__icon-title{
+    font-size: 12px;
+    font-weight: 700;
+    transform: translateY(6px);
+}
+.nav__search{
+    display: flex;
+}
+.main--page-logo{
+    text-decoration: solid #0056b3;
+    font-size: 14px;
+    color: white;
+}
+.main--page-logo:hover{
+    color: #007bff;
+}
+
+.nav__input{
+    border: none;
+    outline: none;
+    width: 200px;
+    height: 30px;
+    border-radius: 10px 0 0 10px;
+    font-size: 15px;
+    text-align: center;
+    background-color: azure;
+}
+.nav__input-search
+{
+    border: none;
+    border: 2px solid azure;
+    border-radius: 0 10px 10px 0;
+    width: 80px;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #5e40a9;
+    cursor: pointer;
+}
+
+.movies__title{
+    margin: 50px;
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+}
+/* Modal styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+#movie-of-the-day {
+    text-align: center;
+    padding: 20px;
+}
+
+.movie-of-the-day__poster {
+    width: 300px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.movie-day{
+    margin: 50px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+}
+.movie-of-day-title, .movie-title{
+    font-size: 24px;
+    font-weight: 700;
+    margin: 20px;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+}
+.info-button{
+    border: none;
+    width: 180px;
+    height: 50px;
+    background-color: #5e40a9;
+    margin: 20px;
+    color: white;
+    font-size: 14px;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 600;
+    border: 1px solid aquamarine;
+    border-radius: 10px;
+}
+.movie-view{
+    width: 600px;
+    margin: auto;
+}
+
+#movie-title{
+    text-align: center;
+    font-family: "Roboto Mono", monospace;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+#close-modal{
+    transform: translateY(-15px);
+}
+#movie-description{
+    padding: 0 50px;
+    margin-bottom: 10px;
+}
+.modal-content p{
+    padding: 0 50px;
+    margin-bottom: 10px;
+}
+strong{
+    font-weight: 800;
+    font-family: "Roboto Mono", monospace;
+}
+#movie-trailer{
+    margin: 30px 50px;
+    width: 400px;
+}
+.label-rating{
+    margin: 10px 50px;
+}
+#movie-rating{
+    width: 100px;
+    font-size: 12px;
+}
+#label-rating{
+    width: 100px;
+    height: 20px;
+    border-radius: 0 0 0 5px;
+    outline: none;
+    border: none;
+    border-color: #5e40a9;
+    border-bottom: 1px solid #5e40a9;
+    border-left: 1px solid #5e40a9;
+}
+#submit-rating{
+    height: 20px;
+    width: 100px;
+    border: none;
+    border: 1px solid #5e40a9;
+    background-color: #5e40a9;
+    color: white;
+    border-radius:0 5px 5px 0 ;
+
+}
+.movies__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.movie-item {
+    width: 150px;
+    text-align: center;
+}
+
+.movie-poster {
+    width: 100%;
+    border-radius: 10px;
+}
+.movies__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+}
+
+.movie-item {
+    text-align: center;
+}
+
+.movie-poster {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+#popular-movies-list{
+    display: flex;
+    margin: 10px 50px 10px 50px;
+    padding: 150px;
+}
+.info-button-films{
+    
+    border: none;
+    width: 100px;
+    height: 50px;
+    background-color: #5e40a9;
+    margin: 20px;
+    color: white;
+    font-size: 12px;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 400;
+    border: 1px solid aquamarine;
+    border-radius: 10px;
+}
+
+.popular-movie__overview{
+    font-size: 14px;
+    margin: 10px;
+    line-height: 18px;
+}
+#movie_id{
+    height: 300px;
+}
+#popular-movies-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Гибкая сетка */
+    gap: 20px;  /* Расстояние между элементами */
+    padding: 20px;
+}
+
+.movie-item {
+    display: flex;
+    flex-direction: column;  /* Расположить элементы вертикально */
+    justify-content: space-between;  /* Распределить пространство между элементами */
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 100%;  /* Чтобы элементы заполнили весь доступный размер */
+}
+
+.movie-poster {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.movie-title {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    flex-grow: 1;  /* Этот элемент будет занимать все доступное пространство */
+}
+
+.info-button-films {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.info-button-films:hover {
+    background-color: #0056b3;
+}
+/* Add styles for the scrollable modal */
+#movie-modal .modal-content {
+    max-height: 80vh; /* limit height */
+    overflow-y: auto; /* enable vertical scrolling */
+    padding: 20px;
+}
+/* Add this to your style.css */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-height: 90vh; /* Allow scrolling inside modal */
+    overflow-y: auto;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+#rating-label, #movie-rating, #submit-rating{
+    margin: 10px 50px;
+}
+#movie-rating{
+    border: none;
+    border-bottom: solid 1px #888;
+    outline: none;
+}
+
+.sort-container{
+    margin: 5px 80px;
+}
+
+select{
+    border-radius: 5px;
+    border: none;
+    border-bottom: #0056b3 1px solid;
+}select {
+    border: none;
+    border-bottom: #3C1C78 1px solid;
+    border-radius: 5px;
+    outline: none;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    margin: 0;
+    display: block;
+    width: 300px;
+    padding: 12px 55px 5px 15px;
+    font-size: 14px;
+    color: #714BB9;
+    position: relative; /* Необходимо для правильного отображения псевдоэлемента */
+}
+
+select:after {
+    content: '\2228'; /* Символ стрелочки */
+    position: absolute;
+    right: 15px; /* Правый отступ от края */
+    top: 50%; /* Вертикальное выравнивание */
+    transform: translateY(-50%); /* Центрирование по вертикали */
+    width: 20px; /* Ширина стрелочки */
+    height: 20px; /* Высота стрелочки */
+    font-size: 24px;
+    color: #714BB9;
+    line-height: 1; /* Понижает расстояние между символами */
+    text-align: center;
+    z-index: 1; /* Обеспечивает, что стрелка поверх */
+    border-left: 1px solid #3C1C78; /* Разделитель между полем и стрелкой */
+}
+@media (max-width: 800px) {
+    iframe{
+        width: 300px;
+        margin: auto;
+    }
+    
+}
+@media (max-width: 650px) {
+    .movie-view{
+        width: 350px;
+        margin: auto;
+    }
+    #popular-movies-list{
+        display: flex;
+        width: 150px;
+        margin: 10px auto;
+    }
+    .nav__icon-els{
+        display: none;
+    }
+    .nav__search{
+        width: 200px;
+        margin: 5px auto;
+    }
+    .nav__input-search{
+    font-size: 12px;
+}
+    .nav__input-search{
+        padding: 0 10px;
+    }
+    
+}
+@media (max-width: 500px) {
+    #movie-title{
+        font-size: 18px;
+    }
+    #movie-description, .modal-content p{
+        font-size: 12px;
+    }
+
+}
+@media (max-width: 450px) {
+    #sort-filter{
+        width: 200px;
+        margin: 5px auto;
+    }
+    iframe{
+        margin: auto;
+        width: 200px;
+        height: 150px;
+    }
+    .movie-view{
+        width: 250px;
+        margin: auto;
+    }
+    .movie-of-the-day__poster{
+        width: 250px;
+    }
+    .movie-view{
+        font-size: 14px;
+    }
+}
+@media (max-width: 400px) {
+    iframe{
+        margin: auto;
+        width: 150px;
+        height: 100px;
+    }
+}

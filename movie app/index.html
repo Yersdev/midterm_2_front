@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" class="movie_app">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style.css">
+    <title>MovieZone</title>
+</head>
+<body>
+    <nav class="movie_app__nav">
+        <div class="nav__icon">
+            <div class="nav__icon-els">
+                <img class="icon-img" src="assets/img/bxs-camera-movie.svg" alt="icon">
+                <div class="nav__icon-title">
+                    <a class="main--page-logo" href="#" onclick="location.reload()">MovieZone</a>
+                </div>    
+            </div>
+            <div class="nav__search">
+                <input class="nav__input" type="text" placeholder="Search movie">
+                <button class="nav__input-search" type="button">Search</button>
+            </div>
+        </div>
+        <button class="nav__wishlist-button" id="wishlist-button">Favorite</button>
+    </nav>
+    
+    <section id="wishlist-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-wishlist-modal" class="close">&times;</span>
+            <h2 class="wishlist-modal__title">My Wishlist</h2>
+            <div id="wishlist-container">
+            </div>
+
+        </div>
+    </section>
+
+    <section class="random-movie">
+        <div id="movie-of-the-day">
+        <h2 class="movie-day">Movie of the Day</h2>
+        </div>
+    </section>
+
+    
+    
+
+    <section class="movies" id="main-menu">
+        <div class="sort-container">
+            <select id="sort-filter">
+                <option value="default">by popularity</option>
+                <option value="vote_average.desc">By rating (high - low)</option>
+                <option value="vote_average.asc">By rating (low - high)</option>
+                <option value="release_date.desc">By release date (new - old)</option>
+                <option value="release_date.asc">By release date (old - new)</option>
+            </select>              
+        </div>
+        <div class="movies__list" id="popular-movies-list"></div>
+    </section>
+    
+<div id="movie-modal" class="modal">
+    <div class="modal-content">
+        <span id="close-modal" class="close">&times;</span>
+        <h2 id="movie-title"></h2>
+        <p id="movie-description"></p>
+        <p><strong>Release Date:</strong> <span id="movie-release-date"></span></p>
+        <p><strong>Country:</strong> <span id="movie-country"></span></p>
+        <p><strong>Genres:</strong> <span id="movie-genres"></span></p>
+        <p><strong>Cast:</strong> <span id="movie-cast"></span></p>
+        <div id="movie-trailer"></div>
+
+        <input type="hidden" id="movie-id">
+        
+        <div id="rating-section">
+            <p id="rating-display" style="display:none;"></p> 
+            <label for="movie-rating" id="rating-label" style="display: block;">Rate this movie (1-10):</label>
+            <input type="number" id="movie-rating" min="1" max="10" placeholder="Enter your rating" style="display: inline;">
+            <button id="submit-rating" style="display: inline;">Submit Rating</button>
+        </div>
+        <button id="add-to-wishlist" style="display: inline;">Add to Favorite</button>
+       
+    </div>
+</div>
+
+
+
+    <button id="back-to-main-menu" class="back-button" style="display:none;">Back to Main Menu</button>
+
+    <script src="assets/js.js"></script>
+</body>
+</html>

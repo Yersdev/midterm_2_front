@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Recipe Finder</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1 class="recipe__title">Recipe Finder</h1>
+        </div>
+        <nav>
+            <input type="text" id="search-query" placeholder="Search for recipes" oninput="searchRecipes(event)">
+            <div class="nav__btns">
+                <button onclick="searchRecipes()">Search</button>
+                <button onclick="openFavoritesModal()">Favorite Food</button>    
+            </div>
+            <div id="autocomplete-dropdown" style="display:none;"></div> <!-- Autocomplete dropdown -->
+        </nav>
+        
+    </header>
+
+    <div id="main-content">
+        <div id="recipe-of-the-day" class="recipe-day-section"></div>
+        <div id="main-recipes" class="recipes-grid"></div>
+        <div id="search-results" class="recipes-grid" style="display: none;"></div>
+    </div>
+
+    <!-- Recipe Details Modal -->
+    <div id="recipe-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeRecipeModal()">&times;</span>
+            <h2 id="modal-title"></h2>
+            <div class="modal-details">
+                
+                <div class="modal-scroll">
+                    <img id="modal-image" src="" alt="Recipe Image">
+                    <div id="modal-ingredients" class="modal-section">modal-ingredients:</div>
+                    <div id="modal-instructions" class="modal-section">Instructions:</div>
+                    <button id="favorite-button" onclick="toggleFavorite()">Add to Favorites</button>
+                    <div id="rating-section">
+                        <label class="rating-input-text" for="rating-input">Rate (0-10):</label>
+                        <input type="number" id="rating-input" placeholder="Rate 1-10" min="0" max="10">
+                        <button onclick="submitRating()">Submit Rating</button>
+                        <p id="user-rating"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Modal -->
+    <div id="favorites-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeFavoritesModal()">&times;</span>
+            <h2>Favorite Recipes</h2>
+            <div id="favorites-list"></div>
+        </div>
+    </div>
+
+    <script src="assets/js.js"></script>
+</body>
+</html>

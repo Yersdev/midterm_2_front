@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" class="wheather-app">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style.css">
+    <title>Wheather App</title>
+</head>
+<body>
+    <nav class="app__nav">
+        <div class="app__serach-container">
+            <input type="text" class="app__search" id="fetch-time" placeholder="Search for your preferred city...">
+            <img class="search-icon city_search" src="assets/img/search 1.svg" alt="search icon">
+        </div>
+        <div class="app__location-container">
+            <span class="icon">📍</span>
+            <button type="button" class="app_location">Current Location</button>
+        </div>
+    </nav>
+    <source src="assets/img/rain 1.svg">
+    
+        <section class = "main-info">
+            <div class="main-info_upper">
+                <div class="main-info__time">
+                    <h2>City</h2>
+                    <p id="main-info__time__clock">00:00</p>
+                    <p id="mian-info__time__date">Time</p>
+                    
+                </div> 
+                
+            </div>
+            <div class="main-info_lower">
+                <div class="main-info__forecast-block">
+                    <div class="main-info__forecast-title">5 Days Forecast:</div>
+                    
+                    <div class="main-info__forecast-day-1">
+                        <div class="forecast-wheather-1-img"><img src="assets/img/clouds 1.svg" alt="icon"></div>
+                        <div class="main-info__forecast-temp-1">20 C</div>
+                        <div class="main-info__forecast-day1-text">Friday, 1 Sep</div>
+                    </div>
+                
+
+                    <div class="main-info__forecast-day-2">
+                        <div class="forecast-wheather-2-img"><img src="assets/img/clouds 1.svg" alt="icon"></div>
+                        <div class="main-info__forecast-temp-2">20 C</div>
+                        <div class="main-info__forecast-day2-text">Friday, 2 Sep</div>
+                    </div>
+                
+                    
+                    <div class="main-info__forecast-day-3">
+                        <div class="forecast-wheather-3-img"><img src="assets/img/clouds 1.svg" alt="icon"></div>
+                        <div class="main-info__forecast-temp-3">20 C</div>
+                        <div class="main-info__forecast-day3-text">Friday, 3 Sep</div>
+                    </div>
+                
+                    
+                    <div class="main-info__forecast-day-4">
+                        <div class="forecast-wheather-4-img"><img src="assets/img/clouds 1.svg" alt="icon"></div>
+                        <div class="main-info__forecast-temp-4">20 C</div>
+                        <div class="main-info__forecast-day4-text">Friday, 4 Sep</div>
+                    </div>
+                
+                    
+                    <div class="main-info__forecast-day-5">
+                        <div class="forecast-wheather-5-img"><img src="assets/img/clouds 1.svg" alt="icon"></div>
+                        <div class="main-info__forecast-temp-5">20 C</div>
+                        <div class="main-info__forecast-day5-text">Friday, 5 Sep</div>
+                    </div>
+                
+                  
+                    </div>
+  
+                    <div class="main-info__data">
+                        <div class="main-info__data-left">
+                            <div class="main-info__temp-info">
+                                <div class="main-info__temp">
+                                    24C
+                                </div>
+                                <div class="main-info__feels-temp">
+                                    Feels like: <div class="felling-temp">22C</div>
+                                </div>
+                            </div>
+    
+                            <div class="main-info__sun">
+                                <div class="main-info__sun-rise">
+                                    <div class="main-info__sun-rise__elements">
+                                       
+                                        <div class="main-info__sun-rise">
+                                        <h3>Sunrise</h3>
+                                        <div id="main-info__sun-rise-time">
+                                            5:00 AM
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main-info__sunset-elements">
+                                    <div class="main-info__sunset__time">
+                                        <div class="main-info__sun-set">
+                                            <h3>Sunset</h3>
+                                            <div id="main-info__sun-set-time">
+                                                18:00 PM
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="main-info__data-mid">
+                            <img src="assets/img/clouds 1.svg" id="main-info__data-mid__wheather" alt="wheather icons">
+                            <div class="main-info__data-mid__wheather-info">
+                                Sunny
+                            </div>
+                        </div>
+    
+                        <div class="main-info__data-right">
+                            <div class="main-info__data-right__upper">
+                                <div class="main-info__data-right__upper-1">
+                                    <img class="humidity-icon" src="assets/img/humidity 1.svg" alt="humidity icon">
+                                    <div class="humidity-info">
+                                        31%
+                                    </div>
+                                    <div class="humidity-info-text">
+                                        Humidity
+                                    </div>
+                                    </div>
+                                    <div class="main-info__data-right__upper-2">
+                                        <img class="wind-icon" src="assets/img/wind 1.png" alt="wind icon">
+                                        <div class="wind-info">
+                                            2km/s
+                                        </div>
+                                        <div class="humidity-info-text">
+                                            wind speed
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="main-info__data-right__lower">
+                                
+                            </div>
+                        </div>
+                    </div>   
+
+                </div>
+            </div>
+    </section>
+    <script src="assets/js.js"></script>
+
+</body>
+</html>
