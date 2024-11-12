@@ -1,4 +1,4 @@
-const apiKey = 'eaf328c3170448289364aea5f58971d8';
+const apiKey = 'YOUR API';
 const baseUrl = 'https://api.spoonacular.com/recipes';
 let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
 let ratings = JSON.parse(localStorage.getItem('ratings')) || {};
@@ -8,6 +8,7 @@ const mainRecipesContainer = document.getElementById('main-recipes');
 const searchResultsContainer = document.getElementById('search-results');
 const autocompleteContainer = document.getElementById('autocomplete-dropdown');
 
+//try to receive the result of the recipe of the day
 async function fetchRecipeOfTheDay() {
     try {
         const response = await fetch(`${baseUrl}/random?apiKey=${apiKey}&number=1`);
@@ -26,6 +27,7 @@ async function fetchRecipeOfTheDay() {
     }
 }
 
+//display the recippe of the day
 function displayRecipeOfTheDay(recipe) {
     recipeOfTheDayContainer.innerHTML = `
         <div class="recipe-container-day">
@@ -38,6 +40,8 @@ function displayRecipeOfTheDay(recipe) {
     `;
 }
 
+
+//try to receive popular recipe
 async function fetchPopularRecipes() {
     try {
         const response = await fetch(`${baseUrl}/complexSearch?apiKey=${apiKey}&sort=popularity&number=5`);
@@ -51,7 +55,7 @@ async function fetchPopularRecipes() {
         console.error('Error fetching popular recipes:', error);
     }
 }
-
+//display the received recipes from api
 function displayPopularRecipes(recipes) {
     mainRecipesContainer.innerHTML = recipes.map(recipe => `
         <div class="recipe-container">
@@ -71,7 +75,7 @@ function initializeFavorites() {
 
 initializeFavorites();
 
-
+//try to show the recipe
 async function showRecipeDetails(recipeId) {
     if (!recipeId) {
         console.error('Recipe ID is undefined');
@@ -90,6 +94,9 @@ async function showRecipeDetails(recipeId) {
         console.error('Error fetching recipe details:', error);
     }
 }
+
+
+//try to show the recipe in the details
 
 function displayRecipeDetails(recipe) {
     document.getElementById('modal-title').innerText = recipe.title;
@@ -118,6 +125,7 @@ function saveRating(recipeId, rating) {
     localStorage.setItem('ratings', JSON.stringify(ratings));
 }
 
+//try to evaluate the rating score 
 function submitRating() {
     const ratingInput = document.getElementById('rating-input');
     const rating = parseInt(ratingInput.value, 10);
@@ -133,6 +141,7 @@ function submitRating() {
     }
 }
 
+
 function toggleFavorite(recipeId, recipeName) {
     if (favorites[recipeId]) {
         delete favorites[recipeId];
@@ -147,6 +156,7 @@ function toggleFavorite(recipeId, recipeName) {
     updateFavoritesButton(recipeId);
 }
 
+//actions with favorites button
 function updateFavoritesButton(recipeId) {
     const button = document.querySelector(`[data-recipe-id="${recipeId}"]`);
     if (button) {
@@ -176,6 +186,7 @@ function updateFavoriteButton(recipeId) {
     }
 }
 
+//try to open modal page for favorites modal page
 function openFavoritesModal() {
     const favoritesList = document.getElementById('favorites-list');
     favoritesList.innerHTML = '';
@@ -208,17 +219,18 @@ function viewFavoriteDetails(recipeId) {
     showRecipeDetails(recipeId);
     closeFavoritesModal(); 
 }
-
+//try to close favorite page
 function closeFavoritesModal() {
     document.getElementById('favorites-modal').style.display = 'none';
 }
 
-
+//try to remove favorite page
 function removeFavorite(recipeId) {
     delete favorites[recipeId];
     localStorage.setItem('favorites', JSON.stringify(favorites));
     openFavoritesModal();}
 
+//try to close favorite page
 function closeFavoritesModal() {
     document.getElementById('favorites-modal').style.display = 'none';
 }
@@ -261,6 +273,7 @@ async function searchRecipes(event) {
     }
 }
 
+//reset to default after searching
 function resetToDefault() {
     recipeOfTheDayContainer.style.display = 'block';
     mainRecipesContainer.style.display = 'grid';
@@ -289,7 +302,7 @@ async function fetchRecipeOfTheDay() {
     }
 }
 
-
+//display to the user the recipe of the day
 function displayRecipeOfTheDay(recipe) {
     recipeOfTheDayContainer.innerHTML = `
         <div class="recipe-container-day">
@@ -355,6 +368,7 @@ function displaySearchResults(recipes) {
     }
 }
 
+//reset to default
 function resetToDefault() {
     mainRecipesContainer.style.display = 'grid';
     searchResultsContainer.style.display = 'none';

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    const API_KEY = "1d0b221204dab4d1d83a5bf98b0ced2d";
+    const API_KEY = "YOUR API";
 
     const clearWeatherData = () => {
         const elements = [
@@ -30,13 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+//try to convert the time
     const formatTimeInTimezone = (timezoneOffset) => {
         const dateElement = document.getElementById("mian-info__time__date");
         const clockElement = document.getElementById("main-info__time__clock");
     
         if (!dateElement || !clockElement) {
             console.warn("Date or Clock element not found. Retrying...");
-            return; // Skip updating if elements are not found
+            return;
         }
     
         const utcTime = new Date().getTime() + new Date().getTimezoneOffset() * 60000;
@@ -47,11 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     
     const startUpdatingTime = (timezoneOffset) => {
-        formatTimeInTimezone(timezoneOffset); // Initial call
-        setInterval(() => formatTimeInTimezone(timezoneOffset), 1000); // Repeat every second
+        formatTimeInTimezone(timezoneOffset);
+        setInterval(() => formatTimeInTimezone(timezoneOffset), 1000); 
     };
     
-
+//receive detail info to use it
     const getWeatherDetails = async (lat, lon, cityName) => {
         const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
     
@@ -70,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    //updating the weather data by getting info about city
   const updateWeatherData = (data, cityName) => {
     document.querySelector(".main-info__temp").textContent = `${data.main.temp}°C`;
     document.querySelector(".felling-temp").textContent = `${data.main.feels_like}°C`;
@@ -81,11 +83,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#main-info__sun-rise-time").textContent = `${new Date(data.sys.sunrise * 1000).toLocaleTimeString()}`;
     document.querySelector("#main-info__sun-set-time").textContent = `${new Date(data.sys.sunset * 1000).toLocaleTimeString()}`;
 
-    // Update main weather icon
+    
     const weatherIcon = document.querySelector("#main-info__data-mid__wheather");
     weatherIcon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
 };
 
+//try to receive informationi about 5 days of the current city
     const get5DayForecast = async (lat, lon) => {
         const FORECAST_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
     
@@ -106,19 +109,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const res = await fetch(GEOCODING_API_URL);
             if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
             const data = await res.json();
-            return data[0].name; // Returns the city name
+            return data[0].name;
         } catch (error) {
             console.error("Error fetching city name:", error);
-            return "Your Location"; // Fallback in case of an error
+            return "Your Location";
         }
     };
+  
     
     const getWeatherForCurrentLocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 async (position) => {
                     const { latitude, longitude } = position.coords;
-                    const cityName = await getCityName(latitude, longitude); // Get the city name
+                    const cityName = await getCityName(latitude, longitude);
                     getWeatherDetails(latitude, longitude, `Your Location - ${cityName}`);
                 },
                 (error) => {
@@ -131,7 +135,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
     
-    // Add event listener for the "Current Location" button
     document.querySelector(".app_location").addEventListener("click", getWeatherForCurrentLocation);
     
 
@@ -146,7 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     };
-    
+
+    //to get info by coordinates, using in current location
     const getCityCoordinates = async (cityName) => {
         const GEOCODING_API_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${API_KEY}`;
         
@@ -166,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Error fetching city coordinates.");
         }
     };
-
+//enter to start searching
     cityInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
             const cityName = cityInput.value.trim();

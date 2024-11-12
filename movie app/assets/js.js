@@ -1,6 +1,6 @@
 const wishList = [];
 
-const apiKey = '700dc0f60d0439f79086e04cb4bdd932';
+const apiKey = 'YOUR API';
 const baseUrl = 'https://api.themoviedb.org/3';
 const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 const movieOfTheDayContainer = document.getElementById('movie-of-the-day');
@@ -16,6 +16,7 @@ function getRating(movieId) {
     return ratingsMap[movieId] || null;
 }
 
+//trying to get movie of the day with api
 async function fetchMovieOfTheDay() {
     try {
         const response = await fetch(`${baseUrl}/movie/popular?api_key=${apiKey}&language=en-US`);
@@ -27,6 +28,7 @@ async function fetchMovieOfTheDay() {
     }
 }
 
+//display movie of the day
 function displayMovieOfTheDay(movie) {
     const posterPath = movie.poster_path ? `${imageBaseUrl + movie.poster_path}` : 'assets/default-poster.jpg';
     movieOfTheDayContainer.innerHTML = `
@@ -47,7 +49,7 @@ async function fetchPopularMovies() {
         console.error('Error loading popular movies:', error);
     }
 }
-
+//display the most popular movie by api
 function displayPopularMovies(movies) {
     const moviesList = document.getElementById('popular-movies-list');
     moviesList.innerHTML = '';
@@ -65,6 +67,7 @@ function displayPopularMovies(movies) {
     });
 }
 
+//
 document.addEventListener('DOMContentLoaded', () => {
     const addToWishlistButton = document.getElementById('add-to-wishlist');
 if (addToWishlistButton) {
@@ -143,6 +146,7 @@ if (addToWishlistButton) {
     });
     
 });
+//add wish list
 function addToWishlist(movie) {
     if (!wishlist.some(item => item.id === movie.id)) {
         wishlist.push(movie);
@@ -152,6 +156,7 @@ function addToWishlist(movie) {
     }
 }
 
+//display wishlist
 function displayWishlist() {
     const wishlistContainer = document.getElementById('wishlist-container');
     wishlistContainer.innerHTML = '';
@@ -174,7 +179,7 @@ function displayWishlist() {
         wishlistContainer.appendChild(movieItem);
     });
 }
-
+//remove from wish list modal page
 function removeFromWishlist(movieId) {
     wishList = wishList.filter(movie => movie.id !== movieId);
     displayWishlist();
@@ -238,7 +243,7 @@ if (wishlistButton) {
     }
 });
 
-
+//display movie overiview
     async function showMovieDetails(movieId) {
         try {
             const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=700dc0f60d0439f79086e04cb4bdd932&language=en-US&append_to_response=videos,credits`);
@@ -283,7 +288,7 @@ if (wishlistButton) {
     };
 
 
-
+//display the wish list
 function displayWishlist() {
     const wishlistContainer = document.getElementById('wishlist-container');
     wishlistContainer.innerHTML = '';
@@ -304,6 +309,8 @@ function displayWishlist() {
     });
 }
 
+// Remove a movie from the wishlist and update display
+
 function removeFromWishlist(movieId) {
     const index = wishList.findIndex(movie => movie.id === movieId);
     if (index !== -1) {
@@ -313,6 +320,7 @@ function removeFromWishlist(movieId) {
     }
 }
 
+// Set up wishlist and modal buttons
 document.getElementById('add-to-wishlist').onclick = function() {
     const movieId = document.getElementById('movie-id').value;
     const movieTitle = document.getElementById('movie-title').innerText;
@@ -343,6 +351,9 @@ document.getElementById('close-modal').onclick = function() {
     document.getElementById('movie-modal').style.display = 'none';
 }
 
+// Manage movie ratings, handling input and saving data
+
+
 function displayRatingSection(movieId) {
     const savedRating = getRating(movieId);
     const ratingContainer = document.getElementById('movie-rating');
@@ -366,7 +377,7 @@ function displayRatingSection(movieId) {
     }
 }
 
-
+//try to get the rating score
 document.getElementById('submit-rating').onclick = function() {
     const ratingContainer = document.getElementById('movie-rating');
     const movieIdInput = document.getElementById('movie-id');
@@ -388,7 +399,7 @@ document.getElementById('submit-rating').onclick = function() {
     displayRatingSection(movieId);
 };
 
-
+//search the movie
 async function searchMovies(query) {
     try {
         const response = await fetch(`${baseUrl}/search/movie?api_key=${apiKey}&query=${encodeURIComponent(query)}&language=en-US`);
@@ -404,6 +415,7 @@ async function searchMovies(query) {
     }
 }
 
+//display search the result of search
 function displaySearchResults(movies) {
     const moviesList = document.querySelector('.movies__list');
     moviesList.innerHTML = '';
@@ -468,6 +480,7 @@ function resetToDefault() {
     document.querySelector('.movies__list').innerHTML = '';
 }
 
+// Initialize the page with the Movie of the Day and the list of popular movies
 fetchMovieOfTheDay();
 fetchPopularMovies();
 document.getElementById('close-wishlist-modal').addEventListener('click', function() {
